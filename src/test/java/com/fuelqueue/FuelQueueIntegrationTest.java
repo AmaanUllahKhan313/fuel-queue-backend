@@ -32,66 +32,88 @@ class FuelQueueIntegrationTest {
     // ── Auth Tests ────────────────────────────────────────────────────────────
 
     @Test @Order(1)
-    @DisplayName("POST /api/auth/register — registers a new user")
-    void testRegister() throws Exception {
+    @DisplayName("POST /api/auth/send-otp — sends OTP to phone number")
+    void testSendOtp() throws Exception {
         AuthRequest req = new AuthRequest();
-        req.setEmail("test@fuelqueue.com");
-        req.setPassword("password123");
-        req.setName("Test User");
+        req.setPhoneNumber("+919876543210");
 
-        mvc.perform(post("/api/auth/register")
+        mvc.perform(post("/api/auth/send-otp")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(req)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.message").value("Registered successfully"));
+            .andExpect(jsonPath("$.message").value("OTP sent to phone number"))
+            .andExpect(jsonPath("$.otp").isNotEmpty());
     }
 
     @Test @Order(2)
-    @DisplayName("POST /api/auth/register — duplicate email returns 400")
-    void testRegisterDuplicate() throws Exception {
-        AuthRequest req = new AuthRequest();
-        req.setEmail("test@fuelqueue.com");
-        req.setPassword("password123");
-        req.setName("Test User");
+    @DisplayName("POST /api/auth/verify-otp — verifies OTP and registers user")
+    void testVerifyOtpRegister() throws Exception {
+        // First send OTP
+        AuthRequest sendReq = new AuthRequest();
+        sendReq.setPhoneNumber("+919987654321");
 
-        mvc.perform(post("/api/auth/register")
+        MvcResult sendResult = mvc.perform(post("/api/auth/send-otp")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(req)))
-            .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.error").exists());
-    }
+                .content(mapper.writeValueAsString(sendReq)))
+            .andExpect(status().isOk())
+            .andReturn();
 
-    @Test @Order(3)
-    @DisplayName("POST /api/auth/login — returns JWT token")
-    void testLogin() throws Exception {
-        AuthRequest req = new AuthRequest();
-        req.setEmail("test@fuelqueue.com");
-        req.setPassword("password123");
+        String sendBody = sendResult.getResponse().getContentAsString();
+        String otp = mapper.readTree(sendBody).get("otp").asText();
 
-        MvcResult result = mvc.perform(post("/api/auth/login")
+        // Now verify OTP with name (registration)
+        AuthRequest verifyReq = new AuthRequest();
+        verifyReq.setPhoneNumber("+919987654321");
+        verifyReq.setOtp(otp);
+        verifyReq.setName("Test User");
+
+        MvcResult result = mvc.perform(post("/api/auth/verify-otp")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(req)))
+                .content(mapper.writeValueAsString(verifyReq)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.token").isNotEmpty())
             .andExpect(jsonPath("$.userId").isNumber())
+            .andExpect(jsonPath("$.name").value("Test User"))
             .andReturn();
 
         String body = result.getResponse().getContentAsString();
         authToken = mapper.readTree(body).get("token").asText();
     }
 
-    @Test @Order(4)
-    @DisplayName("POST /api/auth/login — wrong password returns 401")
-    void testLoginWrongPassword() throws Exception {
-        AuthRequest req = new AuthRequest();
-        req.setEmail("test@fuelqueue.com");
-        req.setPassword("wrongpassword");
+    @Test @Order(3)
+    @DisplayName("POST /api/auth/verify-otp — invalid OTP returns 401")
+    void testVerifyOtpInvalid() throws Exception {
+        // First send OTP
+        AuthRequest sendReq = new AuthRequest();
+        sendReq.setPhoneNumber("+919876543210");
 
-        mvc.perform(post("/api/auth/login")
+        mvc.perform(post("/api/auth/send-otp")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(req)))
+                .content(mapper.writeValueAsString(sendReq)))
+            .andExpect(status().isOk());
+
+        // Try with wrong OTP
+        AuthRequest verifyReq = new AuthRequest();
+        verifyReq.setPhoneNumber("+919876543210");
+        verifyReq.setOtp("000000");
+
+        mvc.perform(post("/api/auth/verify-otp")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(verifyReq)))
             .andExpect(status().isUnauthorized())
             .andExpect(jsonPath("$.error").exists());
+    }
+
+    @Test @Order(4)
+    @DisplayName("POST /api/auth/register — returns 410 deprecated")
+    void testRegisterDeprecated() throws Exception {
+        AuthRequest req = new AuthRequest();
+        req.setPhoneNumber("+919876543210");
+
+        mvc.perform(post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(req)))
+            .andExpect(status().isGone());
     }
 
     // ── Station Tests ─────────────────────────────────────────────────────────

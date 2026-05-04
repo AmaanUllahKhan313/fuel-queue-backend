@@ -11,9 +11,11 @@ CREATE TABLE IF NOT EXISTS fuel_stations (
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS users (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    phone_number VARCHAR(20) NOT NULL UNIQUE,
+    phone_verified BOOLEAN DEFAULT FALSE,
+    otp VARCHAR(6),
+    otp_expires_at TIMESTAMP,
     name VARCHAR(255),
     fcm_token VARCHAR(255)
 );
