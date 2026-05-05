@@ -45,6 +45,20 @@ public class CrowdStore {
                     .collect(Collectors.toSet());
     }
 
+    /**
+     * Check if at least one user has been waiting for more than the threshold minutes.
+     * Returns true if stock is available (meaning someone has been waiting long enough).
+     */
+    public boolean isStockAvailable(Long stationId, int thresholdMinutes) {
+        Map<Long, Long> users = store.get(stationId);
+        if (users == null || users.isEmpty()) return false;
+        
+        long thresholdMs = System.currentTimeMillis() - (thresholdMinutes * 60 * 1000L);
+        
+        // Check if any user has been present for longer than threshold
+        return users.values().stream().anyMatch(timestamp -> timestamp <= thresholdMs);
+    }
+
     /** Clean up stale entries (call periodically or on demand) */
     public void evictStale() {
         long cutoff = System.currentTimeMillis() - (ttlSeconds * 1000L);

@@ -2,6 +2,7 @@ package com.fuelqueue.controller;
 
 import com.fuelqueue.dto.CrowdStatusResponse;
 import com.fuelqueue.dto.NearbyStationsResponse;
+import com.fuelqueue.dto.StationDetailsResponse;
 import com.fuelqueue.model.FuelStation;
 import com.fuelqueue.service.CrowdService;
 import com.fuelqueue.service.StationService;
@@ -45,12 +46,13 @@ public class StationController {
 
     /**
      * GET /api/stations/{id}
-     * Get single station details.
+     * Get single station details with stock availability status.
+     * Stock is available if at least one vehicle has been waiting for 3+ minutes.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<FuelStation> getStation(@PathVariable Long id) {
+    public ResponseEntity<StationDetailsResponse> getStation(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(stationService.findById(id));
+            return ResponseEntity.ok(stationService.getStationDetails(id));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
