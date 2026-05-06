@@ -1,9 +1,39 @@
--- Seed fuel stations (Pune / Pimpri-Chinchwad area)
+
 INSERT INTO fuel_stations (name, address, latitude, longitude, geofence_radius_meters, active)
 VALUES
-  ('HP Petrol Pump Pimpri',          'Pimpri Road, Pimpri',              18.6298, 73.7997, 80.0, TRUE),
-  ('Indian Oil Chinchwad',           'Chinchwad Station Road, Pune',     18.6402, 73.8050, 80.0, TRUE),
-  ('Bharat Petroleum Akurdi',        'Akurdi, Pune',                     18.6481, 73.7694, 80.0, TRUE),
-  ('HP Petrol Pump Nigdi',           'Nigdi Pradhikaran, Pune',          18.6587, 73.7729, 80.0, TRUE),
-  ('Indian Oil Wakad',               'Wakad, Pune',                      18.5984, 73.7609, 80.0, TRUE),
-  ('Reliance Petrol Pump Hinjewadi', 'Hinjewadi Phase 1, Pune',          18.5912, 73.7389, 80.0, TRUE);
+  ('MNGL CNG Old Sangvi',        'Spicer College Rd, Old Sangvi',        18.5756, 73.8057, 80.0, TRUE),
+  ('MNGL CNG Aundh',             'Aundh Road, Pune',                     18.5601, 73.8075, 80.0, TRUE),
+  ('Progrowth CNG Dapodi',       'Old Mumbai Pune Hwy, Dapodi',          18.5862, 73.8323, 80.0, TRUE),
+  ('Pimple Petroleum CNG',       'Pimpri, Pune',                         18.6298, 73.7997, 80.0, TRUE),
+  ('Shree Balaji CNG Nigdi',     'Nigdi Pradhikaran',                    18.6513, 73.7705, 80.0, TRUE),
+  ('Balwadkar CNG Wakad',        'Wakad, Pune',                          18.5974, 73.7620, 80.0, TRUE),
+  ('Sai Expressway Tathawade',   'Tathawade, Pune',                      18.6182, 73.7455, 80.0, TRUE),
+  ('Eway CNG Punawale',          'Punawale, Pune',                       18.6265, 73.7398, 80.0, TRUE),
+  ('MNGL CNG Hinjewadi',         'Hinjewadi Phase 1',                    18.5912, 73.7389, 80.0, TRUE),
+  ('MNGL CNG Baner',             'Baner Road, Pune',                     18.5590, 73.7868, 80.0, TRUE),
+
+  ('MNGL CNG Warje',             'Warje Malwadi, NH48',                  18.4875, 73.8077, 80.0, TRUE),
+  ('MNGL CNG Karve Nagar',       'Karve Nagar, Pune',                    18.5004, 73.8167, 80.0, TRUE),
+  ('MNGL CNG Katraj',            'Katraj Pune Satara Rd',                18.4516, 73.8585, 80.0, TRUE),
+  ('Paygude CNG Narhe',          'Narhe Ambegaon Rd',                    18.4574, 73.8238, 80.0, TRUE),
+  ('MNGL CNG Dhayari',           'Dhayari Phata',                        18.4698, 73.8182, 80.0, TRUE),
+
+  ('Urja Fuels Wagholi',         'Wagholi Pune Nagar Rd',                18.5793, 74.0150, 80.0, TRUE),
+  ('MNGL CNG Kharadi',           'Kharadi Bypass',                       18.5519, 73.9476, 80.0, TRUE),
+  ('MNGL CNG Hadapsar',          'Hadapsar Industrial Area',            18.5089, 73.9260, 80.0, TRUE),
+  ('MNGL CNG Mundhwa',           'Mundhwa Road',                         18.5325, 73.9271, 80.0, TRUE),
+  ('MNGL CNG Magarpatta',        'Magarpatta City',                      18.5167, 73.9250, 80.0, TRUE),
+
+  ('MNGL CNG Swargate',          'Swargate Bus Stand Area',              18.5018, 73.8636, 80.0, TRUE),
+  ('MNGL CNG Bibwewadi',         'Bibwewadi Kondhwa Rd',                 18.4766, 73.8735, 80.0, TRUE),
+  ('MNGL CNG Kondhwa',           'Kondhwa Budruk',                       18.4762, 73.8900, 80.0, TRUE),
+  ('MNGL CNG Camp',              'Pune Camp Area',                       18.5204, 73.8567, 80.0, TRUE),
+
+  ('MNGL CNG Bhosari',           'Bhosari MIDC',                         18.6293, 73.8417, 80.0, TRUE),
+  ('MNGL CNG Moshi',             'Moshi Pune Nashik Rd',                 18.6738, 73.8500, 80.0, TRUE),
+  ('MNGL CNG Chakan',            'Chakan MIDC',                          18.7600, 73.8600, 80.0, TRUE),
+  ('MNGL CNG Talegaon',          'Talegaon Dabhade',                     18.7350, 73.6750, 80.0, TRUE),
+
+  ('MNGL CNG Shivajinagar',      'Shivajinagar Pune',                    18.5308, 73.8475, 80.0, TRUE),
+  ('MNGL CNG Yerwada',           'Yerwada Pune',                         18.5525, 73.8790, 80.0, TRUE),
+  ('MNGL CNG Vishrantwadi',      'Vishrantwadi',                         18.5665, 73.8793, 80.0, TRUE);
