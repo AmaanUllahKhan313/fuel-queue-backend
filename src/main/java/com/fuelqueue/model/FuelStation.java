@@ -26,6 +26,9 @@ public class FuelStation {
 
     private boolean active = true;
 
+    @Column(name = "is_live")
+    private Boolean isLive = false;
+
     public FuelStation() {}
 
     public FuelStation(String name, String address,
@@ -37,6 +40,7 @@ public class FuelStation {
         this.longitude            = longitude;
         this.geofenceRadiusMeters = geofenceRadiusMeters;
         this.active               = true;
+        this.isLive               = false;
     }
 
     public Long getId()                           { return id; }
@@ -52,4 +56,6 @@ public class FuelStation {
     public void setGeofenceRadiusMeters(double v) { this.geofenceRadiusMeters = v; }
     public boolean isActive()                     { return active; }
     public void setActive(boolean v)              { this.active = v; }
+    public boolean isLive()                       { return Boolean.TRUE.equals(isLive); }
+    public void setLive(boolean v)                { this.isLive = v; }
 }

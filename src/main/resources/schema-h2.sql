@@ -6,8 +6,12 @@ CREATE TABLE IF NOT EXISTS fuel_stations (
     latitude DOUBLE NOT NULL,
     longitude DOUBLE NOT NULL,
     geofence_radius_meters DOUBLE,
-    active BOOLEAN
+    active BOOLEAN,
+    is_live BOOLEAN DEFAULT FALSE
 );
+
+ALTER TABLE fuel_stations ADD COLUMN IF NOT EXISTS is_live BOOLEAN DEFAULT FALSE;
+UPDATE fuel_stations SET is_live = FALSE WHERE is_live IS NULL;
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS users (

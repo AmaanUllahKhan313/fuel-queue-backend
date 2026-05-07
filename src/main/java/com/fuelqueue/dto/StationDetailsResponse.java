@@ -1,5 +1,7 @@
 package com.fuelqueue.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Response DTO for get station by ID endpoint.
  * Includes stock availability status based on waiting vehicles.
@@ -14,6 +16,8 @@ public class StationDetailsResponse {
     private double geofenceRadiusMeters;
     private boolean active;
     private boolean stockAvailable;
+    @JsonProperty("isLive")
+    private boolean isLive;
     private int currentCrowdCount;
     private String crowdLevel;
     private int estimatedWaitMinutes;
@@ -23,7 +27,7 @@ public class StationDetailsResponse {
     public StationDetailsResponse(Long id, String name, String address,
                                   double latitude, double longitude,
                                   double geofenceRadiusMeters, boolean active,
-                                  boolean stockAvailable, int currentCrowdCount,
+                                  boolean stockAvailable, boolean isLive, int currentCrowdCount,
                                   String crowdLevel, int estimatedWaitMinutes) {
         this.id = id;
         this.name = name;
@@ -33,6 +37,7 @@ public class StationDetailsResponse {
         this.geofenceRadiusMeters = geofenceRadiusMeters;
         this.active = active;
         this.stockAvailable = stockAvailable;
+        this.isLive = isLive;
         this.currentCrowdCount = currentCrowdCount;
         this.crowdLevel = crowdLevel;
         this.estimatedWaitMinutes = estimatedWaitMinutes;
@@ -62,6 +67,10 @@ public class StationDetailsResponse {
 
     public boolean isStockAvailable() { return stockAvailable; }
     public void setStockAvailable(boolean v) { this.stockAvailable = v; }
+
+    @JsonProperty("isLive")
+    public boolean isLive() { return isLive; }
+    public void setLive(boolean v) { this.isLive = v; }
 
     public int getCurrentCrowdCount() { return currentCrowdCount; }
     public void setCurrentCrowdCount(int v) { this.currentCrowdCount = v; }

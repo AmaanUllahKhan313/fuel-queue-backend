@@ -151,7 +151,8 @@ class FuelQueueIntegrationTest {
         mvc.perform(get("/api/stations/" + testStationId))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name").value("Test HP Pump"))
-            .andExpect(jsonPath("$.latitude").value(18.6350));
+            .andExpect(jsonPath("$.latitude").value(18.6350))
+            .andExpect(jsonPath("$.isLive").value(false));
     }
 
     @Test @Order(8)

@@ -67,6 +67,7 @@ public class StationService {
                 station.getGeofenceRadiusMeters(),
                 station.isActive(),
                 stockAvailable,
+                station.isLive(),
                 crowdCount,
                 crowdLevel,
                 estimatedWait
