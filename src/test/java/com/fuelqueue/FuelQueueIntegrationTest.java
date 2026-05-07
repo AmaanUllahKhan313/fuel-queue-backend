@@ -235,18 +235,25 @@ class FuelQueueIntegrationTest {
     @DisplayName("POST /api/gps/ping — multiple users increase crowd count")
     void testPingMultipleUsersIncreaseCrowd() throws Exception {
         long t = System.currentTimeMillis();
+        Long pingStationId = null;
         // 5 different users ping the same station
         for (long userId = 10L; userId <= 14L; userId++) {
             LocationPing ping = new LocationPing(
                     userId, 18.6298, 73.7997, 2.0, t);
-            mvc.perform(post("/api/gps/ping")
+            MvcResult pingResult = mvc.perform(post("/api/gps/ping")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(mapper.writeValueAsString(ping)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+
+            if (pingStationId == null) {
+                pingStationId = mapper.readTree(pingResult.getResponse().getContentAsString())
+                        .get("stationId").asLong();
+            }
         }
 
-        // Crowd should now be HIGH (7+ users including earlier tests)
-        mvc.perform(get("/api/stations/1/crowd"))
+        // Crowd should increase for the station the pings actually matched
+        mvc.perform(get("/api/stations/" + pingStationId + "/crowd"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.activeUsers").value(greaterThanOrEqualTo(5)));
     }
