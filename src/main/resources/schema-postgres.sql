@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS fuel_stations (
     longitude DOUBLE PRECISION NOT NULL,
     geofence_radius_meters DOUBLE PRECISION,
     active BOOLEAN,
-    is_live BOOLEAN DEFAULT FALSE
+    is_live BOOLEAN DEFAULT FALSE,
+    CONSTRAINT unique_location UNIQUE (name, latitude, longitude)
 );
 
 ALTER TABLE fuel_stations ADD COLUMN IF NOT EXISTS is_live BOOLEAN DEFAULT FALSE;
@@ -33,5 +34,3 @@ CREATE TABLE IF NOT EXISTS location_pings (
     FOREIGN KEY (fuel_station_id) REFERENCES fuel_stations(id)
 );
 
-ALTER TABLE fuel_stations
-ADD CONSTRAINT unique_station UNIQUE (name, latitude, longitude);
