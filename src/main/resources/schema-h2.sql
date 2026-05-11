@@ -36,3 +36,5 @@ CREATE TABLE IF NOT EXISTS location_pings (
     FOREIGN KEY (fuel_station_id) REFERENCES fuel_stations(id)
 );
 
+ALTER TABLE fuel_stations
+ADD CONSTRAINT unique_station UNIQUE (name, latitude, longitude);

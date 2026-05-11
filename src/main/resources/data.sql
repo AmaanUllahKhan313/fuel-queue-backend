@@ -74,4 +74,4 @@ VALUES
     ('Indian Oil Pump (CNG Available)', 'Pune', 18.4577754, 73.8291617, 200.0, TRUE, FALSE),
     ('MNGL CNG Pump', 'Pune', 18.6031465, 73.7468813, 200.0, TRUE, TRUE),
     ('CNG Station', 'Pune', 18.6373814, 73.849216, 200.0, TRUE, FALSE),
-    ('Laxmi Petroleum (Bharat Petroleum)', 'Pune', 18.5779786, 73.7160786, 200.0, TRUE, FALSE);
+    ('Laxmi Petroleum (Bharat Petroleum)', 'Pune', 18.5779786, 73.7160786, 200.0, TRUE, FALSE) ON CONFLICT (name, latitude, longitude) DO NOTHING;
