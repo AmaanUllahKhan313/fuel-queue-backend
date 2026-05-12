@@ -74,4 +74,69 @@ VALUES
     ('Indian Oil Pump (CNG Available)', 'Pune', 18.4577754, 73.8291617, 200.0, TRUE, FALSE),
     ('MNGL CNG Pump', 'Pune', 18.6031465, 73.7468813, 200.0, TRUE, TRUE),
     ('CNG Station', 'Pune', 18.6373814, 73.849216, 200.0, TRUE, FALSE),
-    ('Laxmi Petroleum (Bharat Petroleum)', 'Pune', 18.5779786, 73.7160786, 200.0, TRUE, FALSE) ON CONFLICT (name, latitude, longitude) DO NOTHING;
+    ('Laxmi Petroleum (Bharat Petroleum)', 'Pune', 18.5779786, 73.7160786, 200.0, TRUE, FALSE)
+-- new
+
+    -- Hingoli
+    ('HP Jai Sai Petroleum', 'Sengaon Phata, NH-161, Hingoli', 19.71748, 77.14335, 200.0, TRUE, FALSE),
+    ('BP Narsi Namdeo', 'Narsi Namdeo, Hingoli', 19.69310, 77.12080, 200.0, TRUE, FALSE),
+
+    -- Nanded
+    ('HP Gunwant Petroleum', 'Station Road, Nanded', 19.15090, 77.32130, 200.0, TRUE, FALSE),
+    ('BP Taroda BK', 'NH-161, Taroda BK, Nanded', 19.14197, 77.39081, 200.0, TRUE, FALSE),
+
+    -- Parbhani
+    ('HP Shivshakti Filling Station', 'Basmat Road, Shivram Nagar, Parbhani', 19.25260, 76.77440, 200.0, TRUE, FALSE),
+    ('BP Basmat Road Parbhani', 'Basmat Road, Parbhani', 19.26180, 76.78060, 200.0, TRUE, FALSE),
+
+    -- Chhatrapati Sambhajinagar (Aurangabad)
+    ('BP Waluj MIDC', 'Waluj MIDC, Jalna Road, Aurangabad', 19.87620, 75.34330, 200.0, TRUE, FALSE),
+    ('HP Jalna Road Aurangabad', 'Jalna Road, Aurangabad', 19.87890, 75.34910, 200.0, TRUE, FALSE),
+
+    -- Latur
+    ('HP Ausa Road Latur', 'Ausa Road, Latur', 18.40880, 76.56040, 200.0, TRUE, FALSE),
+    ('BP MIDC Latur', 'MIDC Area, Latur', 18.41260, 76.57450, 200.0, TRUE, FALSE),
+
+    -- Beed
+    ('BP Georai Phata', 'Georai Phata, Beed Road', 19.00090, 75.75960, 200.0, TRUE, FALSE),
+    ('HP Beed Bypass', 'Bypass Road, Beed', 19.01240, 75.77180, 200.0, TRUE, FALSE),
+
+    -- Jalna
+    ('HP Mantha Road Jalna', 'Mantha Road, Jalna', 19.84290, 75.88660, 200.0, TRUE, FALSE),
+    ('BP Bhokardan Road Jalna', 'Bhokardan Road, Jalna', 19.85410, 75.89830, 200.0, TRUE, FALSE),
+
+    -- Dharashiv (Osmanabad)
+    ('HP Tuljapur Road Dharashiv', 'Tuljapur Road, Dharashiv', 18.19030, 76.04480, 200.0, TRUE, FALSE),
+    ('BP MIDC Dharashiv', 'MIDC Area, Dharashiv', 18.18590, 76.05220, 200.0, TRUE, FALSE)
+-- new
+
+    ('HP Jai Sai Petroleum', 'Sengaon Phata, NH-161, Hingoli', 19.703573, 77.122878, 200.0, TRUE, FALSE),
+    ('BP Narsi Namdeo', 'Narsi Namdeo, Hingoli', 19.69310, 77.12080, 200.0, TRUE, FALSE),
+
+    -- Nanded
+    ('HP Gunwant Petroleum', 'Station Road, Nanded', 19.158696, 77.312013, 200.0, TRUE, FALSE),
+    ('BP Taroda BK', 'NH-161, Taroda BK, Nanded', 19.14197, 77.39081, 200.0, TRUE, FALSE),
+
+    -- Parbhani
+    ('HP Shivshakti Filling Station', 'Basmat Road, Shivram Nagar, Parbhani', 19.25260, 76.77440, 200.0, TRUE, FALSE),
+    ('BP Basmat Road Parbhani', 'Basmat Road, Parbhani', 19.26180, 76.78060, 200.0, TRUE, FALSE),
+
+    -- Chhatrapati Sambhajinagar (Aurangabad)
+    ('BP Waluj MIDC', 'Waluj MIDC, Jalna Road, Aurangabad', 19.87620, 75.34330, 200.0, TRUE, FALSE),
+    ('HP Jalna Road Aurangabad', 'Jalna Road, Aurangabad', 19.87890, 75.34910, 200.0, TRUE, FALSE),
+
+    -- Latur
+    ('HP Ausa Road Latur', 'Ausa Road, Latur', 18.40880, 76.56040, 200.0, TRUE, FALSE),
+    ('BP MIDC Latur', 'MIDC Area, Latur', 18.41260, 76.57450, 200.0, TRUE, FALSE),
+
+    -- Beed
+    ('BP Georai Phata', 'Georai Phata, Beed Road', 19.00090, 75.75960, 200.0, TRUE, FALSE),
+    ('HP Beed Bypass', 'Bypass Road, Beed', 19.01240, 75.77180, 200.0, TRUE, FALSE),
+
+    -- Jalna
+    ('HP Mantha Road Jalna', 'Mantha Road, Jalna', 19.84290, 75.88660, 200.0, TRUE, FALSE),
+    ('BP Bhokardan Road Jalna', 'Bhokardan Road, Jalna', 19.85410, 75.89830, 200.0, TRUE, FALSE),
+
+    -- Dharashiv (Osmanabad)
+    ('HP Tuljapur Road Dharashiv', 'Tuljapur Road, Dharashiv', 18.19030, 76.04480, 200.0, TRUE, FALSE),
+    ('BP MIDC Dharashiv', 'MIDC Area, Dharashiv', 18.18590, 76.05220, 200.0, TRUE, FALSE)ON CONFLICT (name, latitude, longitude) DO NOTHING;
