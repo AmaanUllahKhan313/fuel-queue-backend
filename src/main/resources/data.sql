@@ -74,8 +74,7 @@ VALUES
     ('Indian Oil Pump (CNG Available)', 'Pune', 18.4577754, 73.8291617, 200.0, TRUE, FALSE),
     ('MNGL CNG Pump', 'Pune', 18.6031465, 73.7468813, 200.0, TRUE, TRUE),
     ('CNG Station', 'Pune', 18.6373814, 73.849216, 200.0, TRUE, FALSE),
-    ('Laxmi Petroleum (Bharat Petroleum)', 'Pune', 18.5779786, 73.7160786, 200.0, TRUE, FALSE)
--- new
+    ('Laxmi Petroleum (Bharat Petroleum)', 'Pune', 18.5779786, 73.7160786, 200.0, TRUE, FALSE),
 
     -- Hingoli
     ('HP Jai Sai Petroleum', 'Sengaon Phata, NH-161, Hingoli', 19.71748, 77.14335, 200.0, TRUE, FALSE),
@@ -107,7 +106,7 @@ VALUES
 
     -- Dharashiv (Osmanabad)
     ('HP Tuljapur Road Dharashiv', 'Tuljapur Road, Dharashiv', 18.19030, 76.04480, 200.0, TRUE, FALSE),
-    ('BP MIDC Dharashiv', 'MIDC Area, Dharashiv', 18.18590, 76.05220, 200.0, TRUE, FALSE)
+    ('BP MIDC Dharashiv', 'MIDC Area, Dharashiv', 18.18590, 76.05220, 200.0, TRUE, FALSE),
 -- new
 
     ('HP Jai Sai Petroleum', 'Sengaon Phata, NH-161, Hingoli', 19.703573, 77.122878, 200.0, TRUE, FALSE),
@@ -139,4 +138,5 @@ VALUES
 
     -- Dharashiv (Osmanabad)
     ('HP Tuljapur Road Dharashiv', 'Tuljapur Road, Dharashiv', 18.19030, 76.04480, 200.0, TRUE, FALSE),
-    ('BP MIDC Dharashiv', 'MIDC Area, Dharashiv', 18.18590, 76.05220, 200.0, TRUE, FALSE)ON CONFLICT (name, latitude, longitude) DO NOTHING;
+    ('BP MIDC Dharashiv', 'MIDC Area, Dharashiv', 18.18590, 76.05220, 200.0, TRUE, FALSE)
+    ON CONFLICT (name, latitude, longitude) DO NOTHING;
