@@ -1,70 +1,61 @@
 #!/bin/bash
 
-URL="https://fuel-queue-backend-production.up.railway.app/api/gps/ping"
+URL="http://localhost:8080/api/gps/ping"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DATA_SQL="$SCRIPT_DIR/data.sql"
+EXTRACT_SCRIPT="$SCRIPT_DIR/extract_stations.py"
 
-# All stations (lat lng)
-stations=(
-"18.5756 73.8057"
-"18.5601 73.8075"
-"18.5862 73.8323"
-"18.6298 73.7997"
-"18.6513 73.7705"
-"18.5974 73.7620"
-"18.6182 73.7455"
-"18.6265 73.7398"
-"18.5912 73.7389"
-"18.5590 73.7868"
-"18.4875 73.8077"
-"18.5004 73.8167"
-"18.4516 73.8585"
-"18.4574 73.8238"
-"18.4698 73.8182"
-"18.5793 74.0150"
-"18.5519 73.9476"
-"18.5089 73.9260"
-"18.5325 73.9271"
-"18.5167 73.9250"
-"18.5018 73.8636"
-"18.4766 73.8735"
-"18.4762 73.8900"
-"18.5204 73.8567"
-"18.6293 73.8417"
-"18.6738 73.8500"
-"18.7600 73.8600"
-"18.7350 73.6750"
-"18.5308 73.8475"
-"18.5525 73.8790"
-"18.5665 73.8793"
-)
+if [[ ! -f "$DATA_SQL" ]]; then
+  echo "Unable to find data.sql at $DATA_SQL" >&2
+  exit 1
+fi
 
-TOTAL_VEHICLES=100   # change load here
-SLEEP_INTERVAL=5     # seconds between batches
+if [[ ! -f "$EXTRACT_SCRIPT" ]]; then
+  echo "Unable to find extract_stations.py at $EXTRACT_SCRIPT" >&2
+  exit 1
+fi
 
-echo "Starting simulation with $TOTAL_VEHICLES vehicles..."
+# Load station coordinates using Python script
+mapfile -t stations < <(python3 "$EXTRACT_SCRIPT" "$DATA_SQL")
+
+if [[ ${#stations[@]} -eq 0 ]]; then
+  echo "No station coordinates found" >&2
+  exit 1
+fi
+
+CARS_PER_STATION=21
+SLEEP_INTERVAL=5
+
+TOTAL_VEHICLES=$(( ${#stations[@]} * CARS_PER_STATION ))
+
+echo "Starting simulation with $TOTAL_VEHICLES vehicles across ${#stations[@]} nearby stations..."
 
 while true
 do
-  for ((i=1; i<=TOTAL_VEHICLES; i++))
+  user_id=1
+
+  for coords in "${stations[@]}"
   do
-    # Pick random station
-    idx=$((RANDOM % ${#stations[@]}))
-    coords=(${stations[$idx]})
+    base_lat=${coords% *}
+    base_lng=${coords#* }
 
-    base_lat=${coords[0]}
-    base_lng=${coords[1]}
+    for ((car=1; car<=CARS_PER_STATION; car++))
+    do
+      # Add GPS noise (~±50m)
+      lat=$(awk -v base=$base_lat 'BEGIN{srand(); print base + (rand()-0.5)/1000}')
+      lng=$(awk -v base=$base_lng 'BEGIN{srand(); print base + (rand()-0.5)/1000}')
 
-    # Add GPS noise (~±50m)
-    lat=$(awk -v base=$base_lat 'BEGIN{srand(); print base + (rand()-0.5)/1000}')
-    lng=$(awk -v base=$base_lng 'BEGIN{srand(); print base + (rand()-0.5)/1000}')
+      # Random speed (0–5 km/h → queue-like)
+      speed=$(awk 'BEGIN{srand(); print rand()*5}')
 
-    # Random speed (0–5 km/h → queue-like)
-    speed=$(awk 'BEGIN{srand(); print rand()*5}')
+      timestamp=$(date +%s)
 
-    timestamp=$(date +%s)
+      curl -s -X POST "$URL" \
+        -H "Content-Type: application/json" \
+        -d "{\"userId\":$user_id,\"latitude\":$lat,\"longitude\":$lng,\"speedKmh\":$speed,\"timestamp\":$timestamp}" &
 
-    curl -s -X POST "$URL" \
-      -H "Content-Type: application/json" \
-      -d "{\"userId\":$i,\"latitude\":$lat,\"longitude\":$lng,\"speedKmh\":$speed,\"timestamp\":$timestamp}" &
+      user_id=$((user_id + 1))
+    done
 
   done
 
